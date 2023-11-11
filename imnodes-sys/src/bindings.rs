@@ -82,7 +82,7 @@ pub const ImNodesCol__ImNodesCol_MiniMapLinkSelected: ImNodesCol_ = 26;
 pub const ImNodesCol__ImNodesCol_MiniMapCanvas: ImNodesCol_ = 27;
 pub const ImNodesCol__ImNodesCol_MiniMapCanvasOutline: ImNodesCol_ = 28;
 pub const ImNodesCol__ImNodesCol_COUNT: ImNodesCol_ = 29;
-pub type ImNodesCol_ = ::std::os::raw::c_uint;
+pub type ImNodesCol_ = ::std::os::raw::c_int;
 pub const ImNodesStyleVar__ImNodesStyleVar_GridSpacing: ImNodesStyleVar_ = 0;
 pub const ImNodesStyleVar__ImNodesStyleVar_NodeCornerRounding: ImNodesStyleVar_ = 1;
 pub const ImNodesStyleVar__ImNodesStyleVar_NodePadding: ImNodesStyleVar_ = 2;
@@ -99,26 +99,26 @@ pub const ImNodesStyleVar__ImNodesStyleVar_PinOffset: ImNodesStyleVar_ = 12;
 pub const ImNodesStyleVar__ImNodesStyleVar_MiniMapPadding: ImNodesStyleVar_ = 13;
 pub const ImNodesStyleVar__ImNodesStyleVar_MiniMapOffset: ImNodesStyleVar_ = 14;
 pub const ImNodesStyleVar__ImNodesStyleVar_COUNT: ImNodesStyleVar_ = 15;
-pub type ImNodesStyleVar_ = ::std::os::raw::c_uint;
+pub type ImNodesStyleVar_ = ::std::os::raw::c_int;
 pub const ImNodesStyleFlags__ImNodesStyleFlags_None: ImNodesStyleFlags_ = 0;
 pub const ImNodesStyleFlags__ImNodesStyleFlags_NodeOutline: ImNodesStyleFlags_ = 1;
 pub const ImNodesStyleFlags__ImNodesStyleFlags_GridLines: ImNodesStyleFlags_ = 4;
 pub const ImNodesStyleFlags__ImNodesStyleFlags_GridLinesPrimary: ImNodesStyleFlags_ = 8;
 pub const ImNodesStyleFlags__ImNodesStyleFlags_GridSnapping: ImNodesStyleFlags_ = 16;
-pub type ImNodesStyleFlags_ = ::std::os::raw::c_uint;
+pub type ImNodesStyleFlags_ = ::std::os::raw::c_int;
 pub const ImNodesPinShape__ImNodesPinShape_Circle: ImNodesPinShape_ = 0;
 pub const ImNodesPinShape__ImNodesPinShape_CircleFilled: ImNodesPinShape_ = 1;
 pub const ImNodesPinShape__ImNodesPinShape_Triangle: ImNodesPinShape_ = 2;
 pub const ImNodesPinShape__ImNodesPinShape_TriangleFilled: ImNodesPinShape_ = 3;
 pub const ImNodesPinShape__ImNodesPinShape_Quad: ImNodesPinShape_ = 4;
 pub const ImNodesPinShape__ImNodesPinShape_QuadFilled: ImNodesPinShape_ = 5;
-pub type ImNodesPinShape_ = ::std::os::raw::c_uint;
+pub type ImNodesPinShape_ = ::std::os::raw::c_int;
 pub const ImNodesAttributeFlags__ImNodesAttributeFlags_None: ImNodesAttributeFlags_ = 0;
 pub const ImNodesAttributeFlags__ImNodesAttributeFlags_EnableLinkDetachWithDragClick:
     ImNodesAttributeFlags_ = 1;
 pub const ImNodesAttributeFlags__ImNodesAttributeFlags_EnableLinkCreationOnSnap:
     ImNodesAttributeFlags_ = 2;
-pub type ImNodesAttributeFlags_ = ::std::os::raw::c_uint;
+pub type ImNodesAttributeFlags_ = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct EmulateThreeButtonMouse {
@@ -496,7 +496,7 @@ pub const ImNodesMiniMapLocation__ImNodesMiniMapLocation_BottomLeft: ImNodesMini
 pub const ImNodesMiniMapLocation__ImNodesMiniMapLocation_BottomRight: ImNodesMiniMapLocation_ = 1;
 pub const ImNodesMiniMapLocation__ImNodesMiniMapLocation_TopLeft: ImNodesMiniMapLocation_ = 2;
 pub const ImNodesMiniMapLocation__ImNodesMiniMapLocation_TopRight: ImNodesMiniMapLocation_ = 3;
-pub type ImNodesMiniMapLocation_ = ::std::os::raw::c_uint;
+pub type ImNodesMiniMapLocation_ = ::std::os::raw::c_int;
 pub type ImNodesMiniMapNodeHoveringCallback = ::std::option::Option<
     unsafe extern "C" fn(arg1: ::std::os::raw::c_int, arg2: *mut ::std::os::raw::c_void),
 >;
@@ -606,13 +606,21 @@ extern "C" {
     pub fn imnodes_EndNodeTitleBar();
 }
 extern "C" {
-    pub fn imnodes_BeginInputAttribute(id: ::std::os::raw::c_int, shape: ImNodesPinShape);
+    pub fn imnodes_BeginInputAttribute(
+        id: ::std::os::raw::c_int,
+        shape: ImNodesPinShape,
+        category: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
     pub fn imnodes_EndInputAttribute();
 }
 extern "C" {
-    pub fn imnodes_BeginOutputAttribute(id: ::std::os::raw::c_int, shape: ImNodesPinShape);
+    pub fn imnodes_BeginOutputAttribute(
+        id: ::std::os::raw::c_int,
+        shape: ImNodesPinShape,
+        category: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
     pub fn imnodes_EndOutputAttribute();

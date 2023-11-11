@@ -1,4 +1,4 @@
-use imgui::{Ui};
+use imgui::Ui;
 use imnodes::{editor, PinShape};
 
 /// https://github.com/Nelarius/imnodes/blob/master/example/hello.cpp
@@ -9,6 +9,13 @@ pub fn show(ui: &Ui, context: &mut imnodes::EditorContext) {
         editor.add_node(id_gen.next_node(), |mut node| {
             node.add_titlebar(|| {
                 ui.text("simple node :)");
+            });
+            
+            node.add_categorized_input(id_gen.next_input_pin(), PinShape::QuadFilled, 1, ||{
+                ui.text("parameter_sink")
+            });
+            node.add_categorized_output(id_gen.next_output_pin(), PinShape::QuadFilled, 1, ||{
+                ui.text("parameter_source")
             });
 
             node.add_input(id_gen.next_input_pin(), PinShape::Circle, || {

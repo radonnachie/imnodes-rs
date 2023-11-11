@@ -1,4 +1,4 @@
-use imgui::{Slider, Ui};
+use imgui::Ui;
 use imnodes::{
     editor, AttributeFlag, AttributeId, Context, EditorContext, IdentifierGenerator, InputPinId,
     LinkId, NodeId, OutputPinId, PinShape,
@@ -23,6 +23,8 @@ struct Node {
     id: NodeId,
     input: InputPinId,
     output: OutputPinId,
+    in_parameter: InputPinId,
+    out_parameter: OutputPinId,
     attribute: AttributeId,
     value: f32,
 }
@@ -74,6 +76,8 @@ pub fn show(ui: &Ui, state: &mut MultiEditState) {
             id: id_gen.next_node(),
             input: id_gen.next_input_pin(),
             output: id_gen.next_output_pin(),
+            in_parameter: id_gen.next_input_pin(),
+            out_parameter: id_gen.next_output_pin(),
             value: 0.0,
             attribute: id_gen.next_attribute(),
         });
@@ -94,6 +98,8 @@ pub fn show(ui: &Ui, state: &mut MultiEditState) {
                 id,
                 input: id_gen.next_input_pin(),
                 output: id_gen.next_output_pin(),
+                in_parameter: id_gen.next_input_pin(),
+                out_parameter: id_gen.next_output_pin(),
                 value: 0.0,
                 attribute: id_gen.next_attribute(),
             });
@@ -105,18 +111,25 @@ pub fn show(ui: &Ui, state: &mut MultiEditState) {
                     ui.text("node");
                 });
 
-                node.add_input(curr_node.input, PinShape::QuadFilled, || {
+                node.add_categorized_input(curr_node.in_parameter, PinShape::QuadFilled, 1, || {
+                    ui.text("param_in");
+                });
+                node.add_categorized_output(curr_node.out_parameter, PinShape::QuadFilled, 1, || {
+                    ui.text("param_out");
+                });
+
+                node.add_input(curr_node.input, PinShape::TriangleFilled, || {
                     ui.text("input");
                 });
 
                 node.attribute(curr_node.attribute, || {
                     ui.set_next_item_width(130.0);
-                    Slider::new(ui, "value", 0.0, 10.0)
+                    ui.slider_config( "value", 0.0, 10.0)
                         .display_format(format!("{:.2}", curr_node.value))
                         .build(&mut curr_node.value);
                 });
 
-                node.add_output(curr_node.output, PinShape::CircleFilled, || {
+                node.add_output(curr_node.output, PinShape::TriangleFilled, || {
                     ui.text("output");
                 });
             });

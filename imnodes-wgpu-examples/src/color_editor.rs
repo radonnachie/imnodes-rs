@@ -1,4 +1,4 @@
-use imgui::{PopupModal, Slider, Ui};
+use imgui::Ui;
 
 use imnodes::{
     editor, AttributeFlag, AttributeId, Context, EditorContext, IdentifierGenerator, InputPinId,
@@ -296,7 +296,7 @@ pub fn show(ui: &Ui, state: &mut State) {
     state.graph.nodes[0]
         .id
         .set_position(
-            0.9 * ui.window_content_region_width(),
+            0.9 * ui.window_content_region_max()[0],
             300.0,
             imnodes::CoordinateSystem::ScreenSpace,
         )
@@ -388,7 +388,7 @@ fn create_the_editor(
             ui.open_popup(popup_modal);
         }
 
-        PopupModal::new(ui, "popup_add_node")
+        ui.modal_popup_config("popup_add_node")
             .resizable(false)
             .title_bar(false)
             .build(|| {
@@ -576,7 +576,7 @@ fn create_the_editor(
 
                         node.attribute(attribute, || {
                             ui.set_next_item_width(130.0);
-                            Slider::new(ui, "value", 0.0, 1.0)
+                            ui.slider_config("value", 0.0, 1.0)
                                 .display_format(format!("{:.2}", curr_node.value))
                                 .build(&mut curr_node.value);
                         });

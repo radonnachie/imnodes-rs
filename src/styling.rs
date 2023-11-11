@@ -59,7 +59,7 @@ impl EditorContext {
 }
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
-#[repr(u32)]
+#[repr(i32)]
 pub enum ColorStyle {
     NodeBackground = sys::ImNodesCol__ImNodesCol_NodeBackground,
     NodeBackgroundHovered = sys::ImNodesCol__ImNodesCol_NodeBackgroundHovered,
@@ -91,7 +91,7 @@ pub enum ColorStyle {
 }
 
 impl ColorStyle {
-    pub const COUNT: u32 = sys::ImNodesCol__ImNodesCol_COUNT;
+    pub const COUNT: i32 = sys::ImNodesCol__ImNodesCol_COUNT;
 
     #[must_use = "need to call pop on ColorToken befor going out of scope"]
     #[doc(alias = "PushColorStyle")]
@@ -125,7 +125,7 @@ impl Drop for ColorToken {
 /// Location of the MiniMap
 /// TODO add link to add_mini_map
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
-#[repr(u32)]
+#[repr(i32)]
 pub enum MiniMapLocation {
     BottomLeft = sys::ImNodesMiniMapLocation__ImNodesMiniMapLocation_BottomLeft,
     BottomRight = sys::ImNodesMiniMapLocation__ImNodesMiniMapLocation_BottomRight,
@@ -135,7 +135,7 @@ pub enum MiniMapLocation {
 
 /// The default size of each pin shape is balanced to occupy approximately the same surface area on the screen.
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
-#[repr(u32)]
+#[repr(i32)]
 pub enum StyleVar {
     GridSpacing = sys::ImNodesStyleVar__ImNodesStyleVar_GridSpacing,
     NodeCornerRounding = sys::ImNodesStyleVar__ImNodesStyleVar_NodeCornerRounding,
@@ -191,7 +191,7 @@ impl Drop for StyleVarToken {
 }
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
-#[repr(u32)]
+#[repr(i32)]
 pub enum StyleFlag {
     // None = sys::StyleFlags_StyleFlags_None,
     NodeOutline = sys::ImNodesStyleFlags__ImNodesStyleFlags_NodeOutline,
@@ -200,7 +200,7 @@ pub enum StyleFlag {
 
 /// This enum controls the way attribute pins look.
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
-#[repr(u32)]
+#[repr(i32)]
 pub enum PinShape {
     Circle = sys::ImNodesPinShape__ImNodesPinShape_Circle,
     CircleFilled = sys::ImNodesPinShape__ImNodesPinShape_CircleFilled,
@@ -212,7 +212,7 @@ pub enum PinShape {
 
 /// This enum controls the way the attribute pins behave.
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
-#[repr(u32)]
+#[repr(i32)]
 pub enum AttributeFlag {
     None = sys::ImNodesAttributeFlags__ImNodesAttributeFlags_None,
     /// Allow detaching a link by left-clicking and dragging the link at a pin it is connected to.

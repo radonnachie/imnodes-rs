@@ -167,7 +167,7 @@ fn main() {
                         }
 
                         if CollapsingHeader::new("multi editor").build(&ui) {
-                            let width = ui.window_content_region_width() / 2_f32;
+                            let width = ui.window_content_region_max()[0] / 2_f32;
                             ui.child_window("2").size([width, 0.0]).build(|| {
                                 multi_editor::show(&ui, &mut second_editor_state_1);
                             });
