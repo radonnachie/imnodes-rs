@@ -34,6 +34,8 @@ pub type ImNodesStyleFlags = ::std::os::raw::c_int;
 pub type ImNodesPinShape = ::std::os::raw::c_int;
 pub type ImNodesAttributeFlags = ::std::os::raw::c_int;
 pub type ImNodesMiniMapLocation = ::std::os::raw::c_int;
+pub type ImNodesNodeSideShape = ::std::os::raw::c_int;
+pub type ImNodesLinkStyle = ::std::os::raw::c_int;
 pub const ImNodesCol__ImNodesCol_NodeBackground: ImNodesCol_ = 0;
 pub const ImNodesCol__ImNodesCol_NodeBackgroundHovered: ImNodesCol_ = 1;
 pub const ImNodesCol__ImNodesCol_NodeBackgroundSelected: ImNodesCol_ = 2;
@@ -69,18 +71,19 @@ pub const ImNodesStyleVar__ImNodesStyleVar_GridSpacing: ImNodesStyleVar_ = 0;
 pub const ImNodesStyleVar__ImNodesStyleVar_NodeCornerRounding: ImNodesStyleVar_ = 1;
 pub const ImNodesStyleVar__ImNodesStyleVar_NodePadding: ImNodesStyleVar_ = 2;
 pub const ImNodesStyleVar__ImNodesStyleVar_NodeBorderThickness: ImNodesStyleVar_ = 3;
-pub const ImNodesStyleVar__ImNodesStyleVar_LinkThickness: ImNodesStyleVar_ = 4;
-pub const ImNodesStyleVar__ImNodesStyleVar_LinkLineSegmentsPerLength: ImNodesStyleVar_ = 5;
-pub const ImNodesStyleVar__ImNodesStyleVar_LinkHoverDistance: ImNodesStyleVar_ = 6;
-pub const ImNodesStyleVar__ImNodesStyleVar_PinCircleRadius: ImNodesStyleVar_ = 7;
-pub const ImNodesStyleVar__ImNodesStyleVar_PinQuadSideLength: ImNodesStyleVar_ = 8;
-pub const ImNodesStyleVar__ImNodesStyleVar_PinTriangleSideLength: ImNodesStyleVar_ = 9;
-pub const ImNodesStyleVar__ImNodesStyleVar_PinLineThickness: ImNodesStyleVar_ = 10;
-pub const ImNodesStyleVar__ImNodesStyleVar_PinHoverRadius: ImNodesStyleVar_ = 11;
-pub const ImNodesStyleVar__ImNodesStyleVar_PinOffset: ImNodesStyleVar_ = 12;
-pub const ImNodesStyleVar__ImNodesStyleVar_MiniMapPadding: ImNodesStyleVar_ = 13;
-pub const ImNodesStyleVar__ImNodesStyleVar_MiniMapOffset: ImNodesStyleVar_ = 14;
-pub const ImNodesStyleVar__ImNodesStyleVar_COUNT: ImNodesStyleVar_ = 15;
+pub const ImNodesStyleVar__ImNodesStyleVar_LinkTerminationMargin: ImNodesStyleVar_ = 4;
+pub const ImNodesStyleVar__ImNodesStyleVar_LinkThickness: ImNodesStyleVar_ = 5;
+pub const ImNodesStyleVar__ImNodesStyleVar_LinkLineSegmentsPerLength: ImNodesStyleVar_ = 6;
+pub const ImNodesStyleVar__ImNodesStyleVar_LinkHoverDistance: ImNodesStyleVar_ = 7;
+pub const ImNodesStyleVar__ImNodesStyleVar_PinCircleRadius: ImNodesStyleVar_ = 8;
+pub const ImNodesStyleVar__ImNodesStyleVar_PinQuadSideLength: ImNodesStyleVar_ = 9;
+pub const ImNodesStyleVar__ImNodesStyleVar_PinTriangleSideLength: ImNodesStyleVar_ = 10;
+pub const ImNodesStyleVar__ImNodesStyleVar_PinLineThickness: ImNodesStyleVar_ = 11;
+pub const ImNodesStyleVar__ImNodesStyleVar_PinHoverRadius: ImNodesStyleVar_ = 12;
+pub const ImNodesStyleVar__ImNodesStyleVar_PinOffset: ImNodesStyleVar_ = 13;
+pub const ImNodesStyleVar__ImNodesStyleVar_MiniMapPadding: ImNodesStyleVar_ = 14;
+pub const ImNodesStyleVar__ImNodesStyleVar_MiniMapOffset: ImNodesStyleVar_ = 15;
+pub const ImNodesStyleVar__ImNodesStyleVar_COUNT: ImNodesStyleVar_ = 16;
 pub type ImNodesStyleVar_ = ::std::os::raw::c_uint;
 pub const ImNodesStyleFlags__ImNodesStyleFlags_None: ImNodesStyleFlags_ = 0;
 pub const ImNodesStyleFlags__ImNodesStyleFlags_NodeOutline: ImNodesStyleFlags_ = 1;
@@ -95,6 +98,13 @@ pub const ImNodesPinShape__ImNodesPinShape_TriangleFilled: ImNodesPinShape_ = 3;
 pub const ImNodesPinShape__ImNodesPinShape_Quad: ImNodesPinShape_ = 4;
 pub const ImNodesPinShape__ImNodesPinShape_QuadFilled: ImNodesPinShape_ = 5;
 pub type ImNodesPinShape_ = ::std::os::raw::c_uint;
+pub const ImNodesNodeSideShape__ImNodesNodeSideShape_Straight: ImNodesNodeSideShape_ = 0;
+pub const ImNodesNodeSideShape__ImNodesNodeSideShape_Round: ImNodesNodeSideShape_ = 1;
+pub const ImNodesNodeSideShape__ImNodesNodeSideShape_Sharp: ImNodesNodeSideShape_ = 2;
+pub type ImNodesNodeSideShape_ = ::std::os::raw::c_uint;
+pub const ImNodesLinkStyle__ImNodesLinkStyle_Orthogonal: ImNodesLinkStyle_ = 0;
+pub const ImNodesLinkStyle__ImNodesLinkStyle_Beziers: ImNodesLinkStyle_ = 1;
+pub type ImNodesLinkStyle_ = ::std::os::raw::c_uint;
 pub const ImNodesAttributeFlags__ImNodesAttributeFlags_None: ImNodesAttributeFlags_ = 0;
 pub const ImNodesAttributeFlags__ImNodesAttributeFlags_EnableLinkDetachWithDragClick:
     ImNodesAttributeFlags_ = 1;
@@ -170,8 +180,10 @@ const _: () = {
 pub struct ImNodesStyle {
     pub GridSpacing: f32,
     pub NodeCornerRounding: f32,
+    pub NodeShapedSideDepth: f32,
     pub NodePadding: ImVec2,
     pub NodeBorderThickness: f32,
+    pub LinkTerminationMargin: f32,
     pub LinkThickness: f32,
     pub LinkLineSegmentsPerLength: f32,
     pub LinkHoverDistance: f32,
@@ -188,41 +200,45 @@ pub struct ImNodesStyle {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of ImNodesStyle"][::std::mem::size_of::<ImNodesStyle>() - 192usize];
+    ["Size of ImNodesStyle"][::std::mem::size_of::<ImNodesStyle>() - 200usize];
     ["Alignment of ImNodesStyle"][::std::mem::align_of::<ImNodesStyle>() - 4usize];
     ["Offset of field: ImNodesStyle::GridSpacing"]
         [::std::mem::offset_of!(ImNodesStyle, GridSpacing) - 0usize];
     ["Offset of field: ImNodesStyle::NodeCornerRounding"]
         [::std::mem::offset_of!(ImNodesStyle, NodeCornerRounding) - 4usize];
+    ["Offset of field: ImNodesStyle::NodeShapedSideDepth"]
+        [::std::mem::offset_of!(ImNodesStyle, NodeShapedSideDepth) - 8usize];
     ["Offset of field: ImNodesStyle::NodePadding"]
-        [::std::mem::offset_of!(ImNodesStyle, NodePadding) - 8usize];
+        [::std::mem::offset_of!(ImNodesStyle, NodePadding) - 12usize];
     ["Offset of field: ImNodesStyle::NodeBorderThickness"]
-        [::std::mem::offset_of!(ImNodesStyle, NodeBorderThickness) - 16usize];
+        [::std::mem::offset_of!(ImNodesStyle, NodeBorderThickness) - 20usize];
+    ["Offset of field: ImNodesStyle::LinkTerminationMargin"]
+        [::std::mem::offset_of!(ImNodesStyle, LinkTerminationMargin) - 24usize];
     ["Offset of field: ImNodesStyle::LinkThickness"]
-        [::std::mem::offset_of!(ImNodesStyle, LinkThickness) - 20usize];
+        [::std::mem::offset_of!(ImNodesStyle, LinkThickness) - 28usize];
     ["Offset of field: ImNodesStyle::LinkLineSegmentsPerLength"]
-        [::std::mem::offset_of!(ImNodesStyle, LinkLineSegmentsPerLength) - 24usize];
+        [::std::mem::offset_of!(ImNodesStyle, LinkLineSegmentsPerLength) - 32usize];
     ["Offset of field: ImNodesStyle::LinkHoverDistance"]
-        [::std::mem::offset_of!(ImNodesStyle, LinkHoverDistance) - 28usize];
+        [::std::mem::offset_of!(ImNodesStyle, LinkHoverDistance) - 36usize];
     ["Offset of field: ImNodesStyle::PinCircleRadius"]
-        [::std::mem::offset_of!(ImNodesStyle, PinCircleRadius) - 32usize];
+        [::std::mem::offset_of!(ImNodesStyle, PinCircleRadius) - 40usize];
     ["Offset of field: ImNodesStyle::PinQuadSideLength"]
-        [::std::mem::offset_of!(ImNodesStyle, PinQuadSideLength) - 36usize];
+        [::std::mem::offset_of!(ImNodesStyle, PinQuadSideLength) - 44usize];
     ["Offset of field: ImNodesStyle::PinTriangleSideLength"]
-        [::std::mem::offset_of!(ImNodesStyle, PinTriangleSideLength) - 40usize];
+        [::std::mem::offset_of!(ImNodesStyle, PinTriangleSideLength) - 48usize];
     ["Offset of field: ImNodesStyle::PinLineThickness"]
-        [::std::mem::offset_of!(ImNodesStyle, PinLineThickness) - 44usize];
+        [::std::mem::offset_of!(ImNodesStyle, PinLineThickness) - 52usize];
     ["Offset of field: ImNodesStyle::PinHoverRadius"]
-        [::std::mem::offset_of!(ImNodesStyle, PinHoverRadius) - 48usize];
+        [::std::mem::offset_of!(ImNodesStyle, PinHoverRadius) - 56usize];
     ["Offset of field: ImNodesStyle::PinOffset"]
-        [::std::mem::offset_of!(ImNodesStyle, PinOffset) - 52usize];
+        [::std::mem::offset_of!(ImNodesStyle, PinOffset) - 60usize];
     ["Offset of field: ImNodesStyle::MiniMapPadding"]
-        [::std::mem::offset_of!(ImNodesStyle, MiniMapPadding) - 56usize];
+        [::std::mem::offset_of!(ImNodesStyle, MiniMapPadding) - 64usize];
     ["Offset of field: ImNodesStyle::MiniMapOffset"]
-        [::std::mem::offset_of!(ImNodesStyle, MiniMapOffset) - 64usize];
-    ["Offset of field: ImNodesStyle::Flags"][::std::mem::offset_of!(ImNodesStyle, Flags) - 72usize];
+        [::std::mem::offset_of!(ImNodesStyle, MiniMapOffset) - 72usize];
+    ["Offset of field: ImNodesStyle::Flags"][::std::mem::offset_of!(ImNodesStyle, Flags) - 80usize];
     ["Offset of field: ImNodesStyle::Colors"]
-        [::std::mem::offset_of!(ImNodesStyle, Colors) - 76usize];
+        [::std::mem::offset_of!(ImNodesStyle, Colors) - 84usize];
 };
 pub const ImNodesMiniMapLocation__ImNodesMiniMapLocation_BottomLeft: ImNodesMiniMapLocation_ = 0;
 pub const ImNodesMiniMapLocation__ImNodesMiniMapLocation_BottomRight: ImNodesMiniMapLocation_ = 1;
@@ -369,7 +385,31 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
+    pub fn imnodes_LinkWithWaypoints(
+        id: ::std::os::raw::c_int,
+        start_attribute_id: ::std::os::raw::c_int,
+        end_attribute_id: ::std::os::raw::c_int,
+        length: usize,
+        orthogonal_waypoints: *const f32,
+    );
+}
+unsafe extern "C" {
     pub fn imnodes_SetNodeDraggable(node_id: ::std::os::raw::c_int, draggable: bool);
+}
+unsafe extern "C" {
+    pub fn imnodes_SetNodeLeftSideShape(
+        node_id: ::std::os::raw::c_int,
+        shape: ImNodesNodeSideShape,
+    );
+}
+unsafe extern "C" {
+    pub fn imnodes_SetNodeRightSideShape(
+        node_id: ::std::os::raw::c_int,
+        shape: ImNodesNodeSideShape,
+    );
+}
+unsafe extern "C" {
+    pub fn imnodes_SetNodeShapedSideDepth(node_id: ::std::os::raw::c_int, depth: f32);
 }
 unsafe extern "C" {
     pub fn imnodes_SetNodeScreenSpacePos(node_id: ::std::os::raw::c_int, screen_space_pos: ImVec2);
@@ -391,6 +431,19 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn imnodes_SnapNodeToGrid(node_id: ::std::os::raw::c_int);
+}
+unsafe extern "C" {
+    pub fn imnodes_SetPinCategory(pin_id: ::std::os::raw::c_int, category: ::std::os::raw::c_int);
+}
+unsafe extern "C" {
+    pub fn imnodes_SetPinLinkStyle(pin_id: ::std::os::raw::c_int, style: ImNodesLinkStyle);
+}
+unsafe extern "C" {
+    pub fn imnodes_SetLinkPathOrthogonalWaypoints(
+        link_id: ::std::os::raw::c_int,
+        length: usize,
+        waypoints: *const f32,
+    );
 }
 unsafe extern "C" {
     pub fn imnodes_IsEditorHovered() -> bool;

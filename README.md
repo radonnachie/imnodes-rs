@@ -12,6 +12,16 @@ They are inspsired by [implot-rs](https://github.com/4bb4/implot-rs).
 
 ![example image](example.png)
 
+## compilation
+
+If the cimnodes bindings change, execute the following to update the packages:
+
+- In imnodes-sys-bindgen
+  - `cargo clean`
+  - `cargo run`
+- In imnodes-sys
+  - `cargo build`
+
 ## docs
 
 `cargo doc --no-deps --open`

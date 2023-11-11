@@ -342,7 +342,11 @@ pub fn show(ui: &imgui::Ui, state: &mut State) {
     let width = ui.window_content_region_max()[0] - ui.window_content_region_min()[0];
     let _ = state.graph.nodes[0]
         .id
-        .set_position(0.9 * width, 300.0, imnodes::CoordinateSystem::ScreenSpace)
+        .set_position(
+            0.9 * ui.window_content_region_max()[0],
+            300.0,
+            imnodes::CoordinateSystem::ScreenSpace,
+        )
         .set_draggable(false);
 
     // node and link behaviour setup

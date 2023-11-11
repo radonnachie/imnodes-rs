@@ -1,10 +1,21 @@
+use imnodes::PinShape;
+
 /// https://github.com/Nelarius/imnodes/blob/master/example/hello.cpp
 pub fn show(ui: &imgui::Ui, context: &mut imnodes::EditorContext) {
     let mut id_generator = context.new_identifier_generator();
 
-    imnodes::editor(context, |mut editor| {
-        editor.add_node(id_generator.next_node(), |mut node| {
-            node.add_titlebar(|| ui.text("simple node :)"));
+    editor(context, |mut editor| {
+        editor.add_node(id_gen.next_node(), |mut node| {
+            node.add_titlebar(|| {
+                ui.text("simple node :)");
+            });
+            
+            node.add_categorized_input(id_gen.next_input_pin(), PinShape::QuadFilled, 1, ||{
+                ui.text("parameter_sink")
+            });
+            node.add_categorized_output(id_gen.next_output_pin(), PinShape::QuadFilled, 1, ||{
+                ui.text("parameter_source")
+            });
 
             node.add_input(
                 id_generator.next_input_pin(),

@@ -37,6 +37,8 @@ impl Default for Style {
             MiniMapPadding: sys::ImVec2 { x: 8.0, y: 8.0 },
             MiniMapOffset: sys::ImVec2 { x: 4.0, y: 4.0 },
             Flags: (StyleFlags::GridLines as i32) | (StyleFlags::NodeOutline as i32),
+            NodeShapedSideDepth: 0.0,
+            LinkTerminationMargin: 5.0,
             // Initialize colors array temporarily
             Colors: [0; sys::ImNodesCol__ImNodesCol_COUNT as usize],
         };

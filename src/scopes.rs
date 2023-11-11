@@ -383,12 +383,15 @@ impl NodeScope {
     /// * `shape`: The visual shape of the pin.
     /// * `f`: A closure that defines the UI content associated with this pin.
     #[doc(alias = "BeginInputAttribute", alias = "EndInputAttribute")]
-    pub fn add_input<F: FnOnce()>(&mut self, id: InputPinId, shape: PinShape, f: F) {
-        // Safety: Begins an input attribute scope. Must be paired with EndInputAttribute.
+    pub fn add_categorized_input<F: FnOnce()>(&mut self, id: InputPinId, shape: PinShape, category: i32, f: F) {
         unsafe { sys::imnodes_BeginInputAttribute(id.into(), shape as i32) };
         f();
         // Safety: Ends the input attribute scope.
         unsafe { sys::imnodes_EndInputAttribute() };
+    }
+    /// Convenience wrapper for [add_categorized_input], with category 0.
+    pub fn add_input<F: FnOnce()>(&mut self, id: InputPinId, shape: PinShape, f: F) {
+        self.add_categorized_input(id, shape, 0, f);
     }
 
     /// Adds an output pin (rendered on the right side) and its associated attribute UI to the node.
@@ -400,12 +403,15 @@ impl NodeScope {
     /// * `shape`: The visual shape of the pin.
     /// * `f`: A closure that defines the UI content associated with this pin.
     #[doc(alias = "BeginOutputAttribute", alias = "EndOutputAttribute")]
-    pub fn add_output<F: FnOnce()>(&mut self, id: OutputPinId, shape: PinShape, f: F) {
-        // Safety: Begins an output attribute scope. Must be paired with EndOutputAttribute.
+    pub fn add_categorized_output<F: FnOnce()>(&mut self, id: OutputPinId, shape: PinShape, category: i32, f: F) {
         unsafe { sys::imnodes_BeginOutputAttribute(id.into(), shape as i32) };
         f();
         // Safety: Ends the output attribute scope.
         unsafe { sys::imnodes_EndOutputAttribute() };
+    }
+    /// Convenience wrapper for [add_categorized_output], with category 0.
+    pub fn add_output<F: FnOnce()>(&mut self, id: OutputPinId, shape: PinShape, f: F) {
+        self.add_categorized_output(id, shape, 0, f);
     }
 
     /// Adds a static attribute (UI element without a pin) to the node.
