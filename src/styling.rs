@@ -11,6 +11,8 @@ pub use sys::ImNodesStyle;
 pub fn create_imnodes_style() -> ImNodesStyle {
     ImNodesStyle {
         GridSpacing: 24.0,
+
+        NodeShapedSideDepth: 0.0,
         NodeCornerRounding: 4.0,
         NodePadding: sys::ImVec2 { x: 8.0, y: 8.0 },
         NodeBorderThickness: 1.0,
@@ -25,13 +27,13 @@ pub fn create_imnodes_style() -> ImNodesStyle {
 
         PinLineThickness: 1.0,
         PinHoverRadius: 10.0,
-        PinOffset: 0.0,
+        PinOffset: -20.0,
+        
         MiniMapPadding: sys::ImVec2 { x: 8.0, y: 8.0 },
-
         MiniMapOffset: sys::ImVec2 { x: 4.0, y: 4.0 },
 
         Flags: StyleFlag::GridLines as i32 | StyleFlag::NodeOutline as i32,
-        Colors: Default::default(), // TODO does this match the cpp code? could not find any other initializer
+        Colors: Default::default(),
     }
 }
 
@@ -208,6 +210,15 @@ pub enum PinShape {
     TriangleFilled = sys::ImNodesPinShape__ImNodesPinShape_TriangleFilled,
     Quad = sys::ImNodesPinShape__ImNodesPinShape_Quad,
     QuadFilled = sys::ImNodesPinShape__ImNodesPinShape_QuadFilled,
+}
+
+/// This enum specifies shapes for the sides of nodes.
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
+#[repr(i32)]
+pub enum NodeSideShape {
+    Straight = sys::ImNodesNodeSideShape__ImNodesNodeSideShape_Straight,
+    Round = sys::ImNodesNodeSideShape__ImNodesNodeSideShape_Round,
+    Sharp = sys::ImNodesNodeSideShape__ImNodesNodeSideShape_Sharp,
 }
 
 /// This enum controls the way the attribute pins behave.

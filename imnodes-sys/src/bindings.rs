@@ -52,6 +52,7 @@ pub type ImNodesStyleFlags = ::std::os::raw::c_int;
 pub type ImNodesPinShape = ::std::os::raw::c_int;
 pub type ImNodesAttributeFlags = ::std::os::raw::c_int;
 pub type ImNodesMiniMapLocation = ::std::os::raw::c_int;
+pub type ImNodesNodeSideShape = ::std::os::raw::c_int;
 pub const ImNodesCol__ImNodesCol_NodeBackground: ImNodesCol_ = 0;
 pub const ImNodesCol__ImNodesCol_NodeBackgroundHovered: ImNodesCol_ = 1;
 pub const ImNodesCol__ImNodesCol_NodeBackgroundSelected: ImNodesCol_ = 2;
@@ -113,6 +114,10 @@ pub const ImNodesPinShape__ImNodesPinShape_TriangleFilled: ImNodesPinShape_ = 3;
 pub const ImNodesPinShape__ImNodesPinShape_Quad: ImNodesPinShape_ = 4;
 pub const ImNodesPinShape__ImNodesPinShape_QuadFilled: ImNodesPinShape_ = 5;
 pub type ImNodesPinShape_ = ::std::os::raw::c_int;
+pub const ImNodesNodeSideShape__ImNodesNodeSideShape_Straight: ImNodesNodeSideShape_ = 0;
+pub const ImNodesNodeSideShape__ImNodesNodeSideShape_Round: ImNodesNodeSideShape_ = 1;
+pub const ImNodesNodeSideShape__ImNodesNodeSideShape_Sharp: ImNodesNodeSideShape_ = 2;
+pub type ImNodesNodeSideShape_ = ::std::os::raw::c_int;
 pub const ImNodesAttributeFlags__ImNodesAttributeFlags_None: ImNodesAttributeFlags_ = 0;
 pub const ImNodesAttributeFlags__ImNodesAttributeFlags_EnableLinkDetachWithDragClick:
     ImNodesAttributeFlags_ = 1;
@@ -291,6 +296,7 @@ fn bindgen_test_layout_ImNodesIO() {
 pub struct ImNodesStyle {
     pub GridSpacing: f32,
     pub NodeCornerRounding: f32,
+    pub NodeShapedSideDepth: f32,
     pub NodePadding: ImVec2,
     pub NodeBorderThickness: f32,
     pub LinkThickness: f32,
@@ -313,7 +319,7 @@ fn bindgen_test_layout_ImNodesStyle() {
     let ptr = UNINIT.as_ptr();
     assert_eq!(
         ::std::mem::size_of::<ImNodesStyle>(),
-        192usize,
+        196usize,
         concat!("Size of: ", stringify!(ImNodesStyle))
     );
     assert_eq!(
@@ -342,8 +348,18 @@ fn bindgen_test_layout_ImNodesStyle() {
         )
     );
     assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).NodePadding) as usize - ptr as usize },
+        unsafe { ::std::ptr::addr_of!((*ptr).NodeShapedSideDepth) as usize - ptr as usize },
         8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(ImNodesStyle),
+            "::",
+            stringify!(NodeShapedSideDepth)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).NodePadding) as usize - ptr as usize },
+        12usize,
         concat!(
             "Offset of field: ",
             stringify!(ImNodesStyle),
@@ -353,7 +369,7 @@ fn bindgen_test_layout_ImNodesStyle() {
     );
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).NodeBorderThickness) as usize - ptr as usize },
-        16usize,
+        20usize,
         concat!(
             "Offset of field: ",
             stringify!(ImNodesStyle),
@@ -363,7 +379,7 @@ fn bindgen_test_layout_ImNodesStyle() {
     );
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).LinkThickness) as usize - ptr as usize },
-        20usize,
+        24usize,
         concat!(
             "Offset of field: ",
             stringify!(ImNodesStyle),
@@ -373,7 +389,7 @@ fn bindgen_test_layout_ImNodesStyle() {
     );
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).LinkLineSegmentsPerLength) as usize - ptr as usize },
-        24usize,
+        28usize,
         concat!(
             "Offset of field: ",
             stringify!(ImNodesStyle),
@@ -383,7 +399,7 @@ fn bindgen_test_layout_ImNodesStyle() {
     );
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).LinkHoverDistance) as usize - ptr as usize },
-        28usize,
+        32usize,
         concat!(
             "Offset of field: ",
             stringify!(ImNodesStyle),
@@ -393,7 +409,7 @@ fn bindgen_test_layout_ImNodesStyle() {
     );
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).PinCircleRadius) as usize - ptr as usize },
-        32usize,
+        36usize,
         concat!(
             "Offset of field: ",
             stringify!(ImNodesStyle),
@@ -403,7 +419,7 @@ fn bindgen_test_layout_ImNodesStyle() {
     );
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).PinQuadSideLength) as usize - ptr as usize },
-        36usize,
+        40usize,
         concat!(
             "Offset of field: ",
             stringify!(ImNodesStyle),
@@ -413,7 +429,7 @@ fn bindgen_test_layout_ImNodesStyle() {
     );
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).PinTriangleSideLength) as usize - ptr as usize },
-        40usize,
+        44usize,
         concat!(
             "Offset of field: ",
             stringify!(ImNodesStyle),
@@ -423,7 +439,7 @@ fn bindgen_test_layout_ImNodesStyle() {
     );
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).PinLineThickness) as usize - ptr as usize },
-        44usize,
+        48usize,
         concat!(
             "Offset of field: ",
             stringify!(ImNodesStyle),
@@ -433,7 +449,7 @@ fn bindgen_test_layout_ImNodesStyle() {
     );
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).PinHoverRadius) as usize - ptr as usize },
-        48usize,
+        52usize,
         concat!(
             "Offset of field: ",
             stringify!(ImNodesStyle),
@@ -443,7 +459,7 @@ fn bindgen_test_layout_ImNodesStyle() {
     );
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).PinOffset) as usize - ptr as usize },
-        52usize,
+        56usize,
         concat!(
             "Offset of field: ",
             stringify!(ImNodesStyle),
@@ -453,7 +469,7 @@ fn bindgen_test_layout_ImNodesStyle() {
     );
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).MiniMapPadding) as usize - ptr as usize },
-        56usize,
+        60usize,
         concat!(
             "Offset of field: ",
             stringify!(ImNodesStyle),
@@ -463,7 +479,7 @@ fn bindgen_test_layout_ImNodesStyle() {
     );
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).MiniMapOffset) as usize - ptr as usize },
-        64usize,
+        68usize,
         concat!(
             "Offset of field: ",
             stringify!(ImNodesStyle),
@@ -473,7 +489,7 @@ fn bindgen_test_layout_ImNodesStyle() {
     );
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).Flags) as usize - ptr as usize },
-        72usize,
+        76usize,
         concat!(
             "Offset of field: ",
             stringify!(ImNodesStyle),
@@ -483,7 +499,7 @@ fn bindgen_test_layout_ImNodesStyle() {
     );
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).Colors) as usize - ptr as usize },
-        76usize,
+        80usize,
         concat!(
             "Offset of field: ",
             stringify!(ImNodesStyle),
@@ -646,6 +662,21 @@ extern "C" {
 }
 extern "C" {
     pub fn imnodes_SetNodeDraggable(node_id: ::std::os::raw::c_int, draggable: bool);
+}
+extern "C" {
+    pub fn imnodes_SetNodeLeftSideShape(
+        node_id: ::std::os::raw::c_int,
+        shape: ImNodesNodeSideShape,
+    );
+}
+extern "C" {
+    pub fn imnodes_SetNodeRightSideShape(
+        node_id: ::std::os::raw::c_int,
+        shape: ImNodesNodeSideShape,
+    );
+}
+extern "C" {
+    pub fn imnodes_SetNodeShapedSideDepth(node_id: ::std::os::raw::c_int, depth: f32);
 }
 extern "C" {
     pub fn imnodes_SetNodeScreenSpacePos(node_id: ::std::os::raw::c_int, screen_space_pos: ImVec2);
