@@ -375,6 +375,18 @@ pub enum PinShape {
     QuadFilled = sys::ImNodesPinShape__ImNodesPinShape_QuadFilled,
 }
 
+/// This enum specifies shapes for the sides of nodes.
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
+#[repr(u32)]
+pub enum NodeSideShape {
+    /// Straight node side
+    Straight = sys::ImNodesNodeSideShape__ImNodesNodeSideShape_Straight,
+    /// Semi-circular node side
+    Round = sys::ImNodesNodeSideShape__ImNodesNodeSideShape_Round,
+    /// Single-angle node side
+    Sharp = sys::ImNodesNodeSideShape__ImNodesNodeSideShape_Sharp,
+}
+
 /// Flags controlling the behavior of individual attributes (pins).
 ///
 /// These are pushed onto a stack using [`EditorContext::push_attribute_flag`]

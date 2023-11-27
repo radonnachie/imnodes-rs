@@ -185,6 +185,27 @@ impl NodeId {
         self
     }
 
+    /// Set the shape of the left side for a specific node.
+    #[doc(alias = "SetNodeLeftSideShape")]
+    pub fn set_left_side_shape(&self, shape: sys::ImNodesNodeSideShape) -> &Self {
+        unsafe { sys::imnodes_SetNodeLeftSideShape(self.id, shape) };
+        self
+    }
+
+    /// Set the shape of the right side for a specific node.
+    #[doc(alias = "SetNodeRightSideShape")]
+    pub fn set_right_side_shape(&self, shape: sys::ImNodesNodeSideShape) -> &Self {
+        unsafe { sys::imnodes_SetNodeRightSideShape(self.id, shape) };
+        self
+    }
+
+    /// Set the depth of a shaped side for a specific node.
+    #[doc(alias = "SetNodeShapedSideDepth")]
+    pub fn set_shaped_side_depth(&self, depth: f32) -> &Self {
+        unsafe { sys::imnodes_SetNodeShapedSideDepth(self.id, depth) };
+        self
+    }
+
     /// Pans the editor view to center on this node.
     #[doc(alias = "EditorContextMoveToNode")]
     #[must_use]
