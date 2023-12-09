@@ -1,6 +1,5 @@
 use imnodes::{
-    AttributeFlags, AttributeId, Context, EditorContext, IdentifierGenerator, InputPinId, LinkId,
-    NodeId, OutputPinId, PinShape, Style, editor,
+    editor, AttributeFlags, AttributeId, Context, EditorContext, IdentifierGenerator, InputPinId, LinkId, LinkStyle, ModifiablePin, NodeId, OutputPinId, PinShape, Style
 };
 
 pub struct MultiEditState {
@@ -102,25 +101,28 @@ pub fn show(ui: &imgui::Ui, state: &mut MultiEditState) {
         // Iterate using indices to allow mutable borrow inside slider closure
         for i in 0..nodes.len() {
             let node_id = nodes[i].id;
-            let input_pin = nodes[i].input;
-            let output_pin = nodes[i].output;
             let attr_id = nodes[i].attribute;
+            
+            let curr_node = &mut nodes[i];
 
             editor.add_node(node_id, |mut node_scope| {
                 node_scope.add_titlebar(|| {
                     ui.text("node");
                 });
 
-                node.add_categorized_input(curr_node.in_parameter, PinShape::QuadFilled, 1, || {
+                node_scope.add_input(curr_node.in_parameter, PinShape::QuadFilled, || {
                     ui.text("param_in");
                 });
-                node.add_categorized_output(curr_node.out_parameter, PinShape::QuadFilled, 1, || {
+                curr_node.in_parameter.set_category(1);
+                node_scope.add_output(curr_node.out_parameter, PinShape::QuadFilled, || {
                     ui.text("param_out");
                 });
+                curr_node.out_parameter.set_category(1);
 
-                node.add_input(curr_node.input, PinShape::TriangleFilled, || {
+                node_scope.add_input(curr_node.input, PinShape::TriangleFilled, || {
                     ui.text("input");
                 });
+                curr_node.input.set_link_style(LinkStyle::Orthogonal);
 
                 node_scope.add_static_attribute(attr_id, || {
                     ui.set_next_item_width(130.0);
@@ -128,10 +130,11 @@ pub fn show(ui: &imgui::Ui, state: &mut MultiEditState) {
                         .display_format(format!("{:.2}", curr_node.value))
                         .build(&mut curr_node.value);
                 });
-
-                node.add_output(curr_node.output, PinShape::TriangleFilled, || {
+                
+                node_scope.add_output(curr_node.output, PinShape::TriangleFilled, || {
                     ui.text("output");
                 });
+                curr_node.output.set_link_style(LinkStyle::Orthogonal);
             });
         }
 

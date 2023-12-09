@@ -38,7 +38,7 @@ impl Default for Style {
             MiniMapOffset: sys::ImVec2 { x: 4.0, y: 4.0 },
             Flags: (StyleFlags::GridLines as i32) | (StyleFlags::NodeOutline as i32),
             NodeShapedSideDepth: 0.0,
-            LinkTerminationMargin: 5.0,
+            LinkTerminationMargin: 15.0,
             // Initialize colors array temporarily
             Colors: [0; sys::ImNodesCol__ImNodesCol_COUNT as usize],
         };
@@ -240,6 +240,8 @@ pub enum StyleVar {
     NodePadding = sys::ImNodesStyleVar__ImNodesStyleVar_NodePadding,
     /// float: Thickness of node borders.
     NodeBorderThickness = sys::ImNodesStyleVar__ImNodesStyleVar_NodeBorderThickness,
+    /// float: Margin of straight path before termination of link.
+    LinkTerminationMargin = sys::ImNodesStyleVar__ImNodesStyleVar_LinkTerminationMargin,
     /// float: Thickness of links between pins.
     LinkThickness = sys::ImNodesStyleVar__ImNodesStyleVar_LinkThickness,
     /// float: Number of line segments used to render links per unit of length. Higher values result in smoother curves.
@@ -385,6 +387,16 @@ pub enum NodeSideShape {
     Round = sys::ImNodesNodeSideShape__ImNodesNodeSideShape_Round,
     /// Single-angle node side
     Sharp = sys::ImNodesNodeSideShape__ImNodesNodeSideShape_Sharp,
+}
+
+/// Flags controlling the pathing of individual links.
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
+#[repr(u32)]
+pub enum LinkStyle {
+    /// Right-angled link path
+    Orthogonal = sys::ImNodesLinkStyle__ImNodesLinkStyle_Orthogonal,
+    /// Bezier link path
+    Beziers = sys::ImNodesLinkStyle__ImNodesLinkStyle_Beziers,
 }
 
 /// Flags controlling the behavior of individual attributes (pins).

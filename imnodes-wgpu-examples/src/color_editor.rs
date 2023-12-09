@@ -1,6 +1,5 @@
 use imnodes::{
-    AttributeFlags, AttributeId, Context, EditorContext, IdentifierGenerator, InputPinId, LinkId,
-    NodeId, OutputPinId, PinShape, Style, editor,
+    editor, AttributeFlags, AttributeId, Context, EditorContext, IdentifierGenerator, InputPinId, LinkId, NodeId, NodeSideShape, OutputPinId, PinShape, Style
 };
 
 pub struct State {
@@ -342,12 +341,10 @@ pub fn show(ui: &imgui::Ui, state: &mut State) {
     let width = ui.window_content_region_max()[0] - ui.window_content_region_min()[0];
     let _ = state.graph.nodes[0]
         .id
-        .set_position(
-            0.9 * ui.window_content_region_max()[0],
-            300.0,
-            imnodes::CoordinateSystem::ScreenSpace,
-        )
-        .set_draggable(false);
+        .set_position(0.9 * width, 300.0, imnodes::CoordinateSystem::ScreenSpace)
+        .set_draggable(false)
+        .set_shaped_side_depth(0.0)
+        .set_left_side_shape(NodeSideShape::Sharp as i32);
 
     // node and link behaviour setup
     let on_snap = state

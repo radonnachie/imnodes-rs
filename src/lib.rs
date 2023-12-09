@@ -379,13 +379,31 @@ impl From<InputPinId> for PinId {
         Self { id: val.id }
     }
 }
-
 /// Identifier for an output pin (rendered on the right side of a node).
 ///
 /// IDs must be unique within the editor context. Generated using [IdentifierGenerator::next_output_pin].
 #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq)]
 pub struct OutputPinId {
     id: i32,
+}
+
+/// Get the Pin ID
+pub trait IdentifiablePin {
+    
+    /// Get the pin ID.
+    fn get_pin_id(&self) -> i32;
+}
+
+impl IdentifiablePin for InputPinId {
+    fn get_pin_id(&self) -> i32 {
+        self.id
+    }
+}
+
+impl IdentifiablePin for OutputPinId {
+    fn get_pin_id(&self) -> i32 {
+        self.id
+    }
 }
 
 impl From<OutputPinId> for i32 {
@@ -399,6 +417,38 @@ impl From<OutputPinId> for PinId {
         Self { id: val.id }
     }
 }
+
+/// Pins can have a category and a style, dictating the value for links between them.
+/// Links can only be formed between pins of the same category.
+/// Links should take the style of the input pin for consistency.
+/// TODO reduce redundancy of link_style.
+///
+/// IDs must be unique within the editor context. Generated using [IdentifierGenerator::next_input_pin].
+pub trait ModifiablePin {
+
+    /// Set the category of this pin.
+    #[doc(alias = "SetPinCategory")]
+    fn set_category(&self, category: i32) -> &Self;
+
+    /// Set the style of links attached to this pin.
+    #[doc(alias = "SetPinLinkStyle")]
+    fn set_link_style(&self, style: LinkStyle) -> &Self;
+}
+
+impl<T> ModifiablePin for T where T: IdentifiablePin {
+    
+    fn set_category(&self, category: i32) -> &Self {
+        unsafe { sys::imnodes_SetPinCategory(self.get_pin_id(), category) };
+        self
+    }
+
+    #[doc(alias = "SetPinLinkStyle")]
+    fn set_link_style(&self, style: LinkStyle) -> &Self {
+        unsafe { sys::imnodes_SetPinLinkStyle(self.get_pin_id(), style as i32) };
+        self
+    }
+}
+
 
 /// Identifier for a link between two pins.
 ///
