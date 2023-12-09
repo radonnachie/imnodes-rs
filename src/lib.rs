@@ -257,6 +257,31 @@ pub struct InputPinId {
     id: i32,
 }
 
+/// Id for an output
+#[derive(Debug, Copy, Clone, Hash, Eq, PartialEq)]
+pub struct OutputPinId {
+    id: i32,
+}
+
+/// Get the Pin ID
+pub trait IdentifiablePin {
+    
+    /// Get the pin ID.
+    fn get_pin_id(&self) -> i32;
+}
+
+impl IdentifiablePin for InputPinId {
+    fn get_pin_id(&self) -> i32 {
+        self.id
+    }
+}
+
+impl IdentifiablePin for OutputPinId {
+    fn get_pin_id(&self) -> i32 {
+        self.id
+    }
+}
+
 impl Into<i32> for InputPinId {
     fn into(self) -> i32 {
         self.id
@@ -269,12 +294,6 @@ impl Into<PinId> for InputPinId {
     }
 }
 
-/// Id for an output
-#[derive(Debug, Copy, Clone, Hash, Eq, PartialEq)]
-pub struct OutputPinId {
-    id: i32,
-}
-
 impl Into<i32> for OutputPinId {
     fn into(self) -> i32 {
         self.id
@@ -284,6 +303,32 @@ impl Into<i32> for OutputPinId {
 impl Into<PinId> for OutputPinId {
     fn into(self) -> PinId {
         PinId { id: self.id }
+    }
+}
+
+/// Set pin attributes of the instance
+pub trait ModifiablePin {
+
+    /// Set the category of this pin.
+    #[doc(alias = "SetPinCategory")]
+    fn set_category(&self, category: i32) -> &Self;
+
+    /// Set the style of links attached to this pin.
+    #[doc(alias = "SetPinLinkStyle")]
+    fn set_link_style(&self, style: LinkStyle) -> &Self;
+}
+
+impl<T> ModifiablePin for T where T: IdentifiablePin {
+    
+    fn set_category(&self, category: i32) -> &Self {
+        unsafe { sys::imnodes_SetPinCategory(self.get_pin_id(), category) };
+        self
+    }
+
+    #[doc(alias = "SetPinLinkStyle")]
+    fn set_link_style(&self, style: LinkStyle) -> &Self {
+        unsafe { sys::imnodes_SetPinLinkStyle(self.get_pin_id(), style as i32) };
+        self
     }
 }
 

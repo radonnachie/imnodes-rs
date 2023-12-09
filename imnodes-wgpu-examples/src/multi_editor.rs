@@ -1,7 +1,7 @@
 use imgui::Ui;
 use imnodes::{
     editor, AttributeFlag, AttributeId, Context, EditorContext, IdentifierGenerator, InputPinId,
-    LinkId, NodeId, OutputPinId, PinShape,
+    LinkId, NodeId, OutputPinId, PinShape, LinkStyle, ModifiablePin
 };
 
 pub struct MultiEditState {
@@ -111,16 +111,19 @@ pub fn show(ui: &Ui, state: &mut MultiEditState) {
                     ui.text("node");
                 });
 
-                node.add_categorized_input(curr_node.in_parameter, PinShape::QuadFilled, 1, || {
+                node.add_input(curr_node.in_parameter, PinShape::QuadFilled, || {
                     ui.text("param_in");
                 });
-                node.add_categorized_output(curr_node.out_parameter, PinShape::QuadFilled, 1, || {
+                curr_node.in_parameter.set_category(1);
+                node.add_output(curr_node.out_parameter, PinShape::QuadFilled, || {
                     ui.text("param_out");
                 });
+                curr_node.out_parameter.set_category(1);
 
                 node.add_input(curr_node.input, PinShape::TriangleFilled, || {
                     ui.text("input");
                 });
+                curr_node.input.set_link_style(LinkStyle::Orthogonal);
 
                 node.attribute(curr_node.attribute, || {
                     ui.set_next_item_width(130.0);
@@ -128,15 +131,16 @@ pub fn show(ui: &Ui, state: &mut MultiEditState) {
                         .display_format(format!("{:.2}", curr_node.value))
                         .build(&mut curr_node.value);
                 });
-
+                
                 node.add_output(curr_node.output, PinShape::TriangleFilled, || {
                     ui.text("output");
                 });
+                curr_node.output.set_link_style(LinkStyle::Orthogonal);
             });
         }
 
         for Link { id, start, end } in links {
-            editor.add_link(*id, *end, *start);
+            editor.add_link(*id, *start, *end);
         }
     });
 

@@ -2,7 +2,7 @@ use imgui::Ui;
 
 use imnodes::{
     editor, AttributeFlag, AttributeId, Context, EditorContext, IdentifierGenerator, InputPinId,
-    LinkId, NodeId, OutputPinId, PinShape,
+    LinkId, NodeId, OutputPinId, PinShape, NodeSideShape,
 };
 
 pub struct State {
@@ -296,11 +296,13 @@ pub fn show(ui: &Ui, state: &mut State) {
     state.graph.nodes[0]
         .id
         .set_position(
-            0.9 * ui.window_content_region_max()[0],
+            0.85 * ui.window_content_region_max()[0],
             300.0,
             imnodes::CoordinateSystem::ScreenSpace,
         )
-        .set_draggable(false);
+        .set_draggable(false)
+        .set_shaped_side_depth(0.0)
+        .set_left_side_shape(NodeSideShape::Sharp as i32);
 
     // node and link behaviour setup
     let on_snap = state
@@ -531,7 +533,7 @@ fn create_the_editor(
                         });
 
                         ui.text(format!("red: {:.2}", red));
-                        ui.text(format!("gree: {:.2}", green));
+                        ui.text(format!("green: {:.2}", green));
                         ui.text(format!("blue: {:.2}", blue));
                     });
                 }
@@ -590,7 +592,7 @@ fn create_the_editor(
         }
 
         for Link { id, start, end } in &graph.links {
-            editor.add_link(*id, *end, *start);
+            editor.add_link(*id, *start, *end);
         }
     })
 }

@@ -53,6 +53,7 @@ pub type ImNodesPinShape = ::std::os::raw::c_int;
 pub type ImNodesAttributeFlags = ::std::os::raw::c_int;
 pub type ImNodesMiniMapLocation = ::std::os::raw::c_int;
 pub type ImNodesNodeSideShape = ::std::os::raw::c_int;
+pub type ImNodesLinkStyle = ::std::os::raw::c_int;
 pub const ImNodesCol__ImNodesCol_NodeBackground: ImNodesCol_ = 0;
 pub const ImNodesCol__ImNodesCol_NodeBackgroundHovered: ImNodesCol_ = 1;
 pub const ImNodesCol__ImNodesCol_NodeBackgroundSelected: ImNodesCol_ = 2;
@@ -88,18 +89,19 @@ pub const ImNodesStyleVar__ImNodesStyleVar_GridSpacing: ImNodesStyleVar_ = 0;
 pub const ImNodesStyleVar__ImNodesStyleVar_NodeCornerRounding: ImNodesStyleVar_ = 1;
 pub const ImNodesStyleVar__ImNodesStyleVar_NodePadding: ImNodesStyleVar_ = 2;
 pub const ImNodesStyleVar__ImNodesStyleVar_NodeBorderThickness: ImNodesStyleVar_ = 3;
-pub const ImNodesStyleVar__ImNodesStyleVar_LinkThickness: ImNodesStyleVar_ = 4;
-pub const ImNodesStyleVar__ImNodesStyleVar_LinkLineSegmentsPerLength: ImNodesStyleVar_ = 5;
-pub const ImNodesStyleVar__ImNodesStyleVar_LinkHoverDistance: ImNodesStyleVar_ = 6;
-pub const ImNodesStyleVar__ImNodesStyleVar_PinCircleRadius: ImNodesStyleVar_ = 7;
-pub const ImNodesStyleVar__ImNodesStyleVar_PinQuadSideLength: ImNodesStyleVar_ = 8;
-pub const ImNodesStyleVar__ImNodesStyleVar_PinTriangleSideLength: ImNodesStyleVar_ = 9;
-pub const ImNodesStyleVar__ImNodesStyleVar_PinLineThickness: ImNodesStyleVar_ = 10;
-pub const ImNodesStyleVar__ImNodesStyleVar_PinHoverRadius: ImNodesStyleVar_ = 11;
-pub const ImNodesStyleVar__ImNodesStyleVar_PinOffset: ImNodesStyleVar_ = 12;
-pub const ImNodesStyleVar__ImNodesStyleVar_MiniMapPadding: ImNodesStyleVar_ = 13;
-pub const ImNodesStyleVar__ImNodesStyleVar_MiniMapOffset: ImNodesStyleVar_ = 14;
-pub const ImNodesStyleVar__ImNodesStyleVar_COUNT: ImNodesStyleVar_ = 15;
+pub const ImNodesStyleVar__ImNodesStyleVar_LinkTerminationMargin: ImNodesStyleVar_ = 4;
+pub const ImNodesStyleVar__ImNodesStyleVar_LinkThickness: ImNodesStyleVar_ = 5;
+pub const ImNodesStyleVar__ImNodesStyleVar_LinkLineSegmentsPerLength: ImNodesStyleVar_ = 6;
+pub const ImNodesStyleVar__ImNodesStyleVar_LinkHoverDistance: ImNodesStyleVar_ = 7;
+pub const ImNodesStyleVar__ImNodesStyleVar_PinCircleRadius: ImNodesStyleVar_ = 8;
+pub const ImNodesStyleVar__ImNodesStyleVar_PinQuadSideLength: ImNodesStyleVar_ = 9;
+pub const ImNodesStyleVar__ImNodesStyleVar_PinTriangleSideLength: ImNodesStyleVar_ = 10;
+pub const ImNodesStyleVar__ImNodesStyleVar_PinLineThickness: ImNodesStyleVar_ = 11;
+pub const ImNodesStyleVar__ImNodesStyleVar_PinHoverRadius: ImNodesStyleVar_ = 12;
+pub const ImNodesStyleVar__ImNodesStyleVar_PinOffset: ImNodesStyleVar_ = 13;
+pub const ImNodesStyleVar__ImNodesStyleVar_MiniMapPadding: ImNodesStyleVar_ = 14;
+pub const ImNodesStyleVar__ImNodesStyleVar_MiniMapOffset: ImNodesStyleVar_ = 15;
+pub const ImNodesStyleVar__ImNodesStyleVar_COUNT: ImNodesStyleVar_ = 16;
 pub type ImNodesStyleVar_ = ::std::os::raw::c_int;
 pub const ImNodesStyleFlags__ImNodesStyleFlags_None: ImNodesStyleFlags_ = 0;
 pub const ImNodesStyleFlags__ImNodesStyleFlags_NodeOutline: ImNodesStyleFlags_ = 1;
@@ -118,6 +120,9 @@ pub const ImNodesNodeSideShape__ImNodesNodeSideShape_Straight: ImNodesNodeSideSh
 pub const ImNodesNodeSideShape__ImNodesNodeSideShape_Round: ImNodesNodeSideShape_ = 1;
 pub const ImNodesNodeSideShape__ImNodesNodeSideShape_Sharp: ImNodesNodeSideShape_ = 2;
 pub type ImNodesNodeSideShape_ = ::std::os::raw::c_int;
+pub const ImNodesLinkStyle__ImNodesLinkStyle_Orthogonal: ImNodesLinkStyle_ = 0;
+pub const ImNodesLinkStyle__ImNodesLinkStyle_Beziers: ImNodesLinkStyle_ = 1;
+pub type ImNodesLinkStyle_ = ::std::os::raw::c_int;
 pub const ImNodesAttributeFlags__ImNodesAttributeFlags_None: ImNodesAttributeFlags_ = 0;
 pub const ImNodesAttributeFlags__ImNodesAttributeFlags_EnableLinkDetachWithDragClick:
     ImNodesAttributeFlags_ = 1;
@@ -299,6 +304,7 @@ pub struct ImNodesStyle {
     pub NodeShapedSideDepth: f32,
     pub NodePadding: ImVec2,
     pub NodeBorderThickness: f32,
+    pub LinkTerminationMargin: f32,
     pub LinkThickness: f32,
     pub LinkLineSegmentsPerLength: f32,
     pub LinkHoverDistance: f32,
@@ -319,7 +325,7 @@ fn bindgen_test_layout_ImNodesStyle() {
     let ptr = UNINIT.as_ptr();
     assert_eq!(
         ::std::mem::size_of::<ImNodesStyle>(),
-        196usize,
+        200usize,
         concat!("Size of: ", stringify!(ImNodesStyle))
     );
     assert_eq!(
@@ -378,8 +384,18 @@ fn bindgen_test_layout_ImNodesStyle() {
         )
     );
     assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).LinkThickness) as usize - ptr as usize },
+        unsafe { ::std::ptr::addr_of!((*ptr).LinkTerminationMargin) as usize - ptr as usize },
         24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(ImNodesStyle),
+            "::",
+            stringify!(LinkTerminationMargin)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).LinkThickness) as usize - ptr as usize },
+        28usize,
         concat!(
             "Offset of field: ",
             stringify!(ImNodesStyle),
@@ -389,7 +405,7 @@ fn bindgen_test_layout_ImNodesStyle() {
     );
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).LinkLineSegmentsPerLength) as usize - ptr as usize },
-        28usize,
+        32usize,
         concat!(
             "Offset of field: ",
             stringify!(ImNodesStyle),
@@ -399,7 +415,7 @@ fn bindgen_test_layout_ImNodesStyle() {
     );
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).LinkHoverDistance) as usize - ptr as usize },
-        32usize,
+        36usize,
         concat!(
             "Offset of field: ",
             stringify!(ImNodesStyle),
@@ -409,7 +425,7 @@ fn bindgen_test_layout_ImNodesStyle() {
     );
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).PinCircleRadius) as usize - ptr as usize },
-        36usize,
+        40usize,
         concat!(
             "Offset of field: ",
             stringify!(ImNodesStyle),
@@ -419,7 +435,7 @@ fn bindgen_test_layout_ImNodesStyle() {
     );
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).PinQuadSideLength) as usize - ptr as usize },
-        40usize,
+        44usize,
         concat!(
             "Offset of field: ",
             stringify!(ImNodesStyle),
@@ -429,7 +445,7 @@ fn bindgen_test_layout_ImNodesStyle() {
     );
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).PinTriangleSideLength) as usize - ptr as usize },
-        44usize,
+        48usize,
         concat!(
             "Offset of field: ",
             stringify!(ImNodesStyle),
@@ -439,7 +455,7 @@ fn bindgen_test_layout_ImNodesStyle() {
     );
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).PinLineThickness) as usize - ptr as usize },
-        48usize,
+        52usize,
         concat!(
             "Offset of field: ",
             stringify!(ImNodesStyle),
@@ -449,7 +465,7 @@ fn bindgen_test_layout_ImNodesStyle() {
     );
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).PinHoverRadius) as usize - ptr as usize },
-        52usize,
+        56usize,
         concat!(
             "Offset of field: ",
             stringify!(ImNodesStyle),
@@ -459,7 +475,7 @@ fn bindgen_test_layout_ImNodesStyle() {
     );
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).PinOffset) as usize - ptr as usize },
-        56usize,
+        60usize,
         concat!(
             "Offset of field: ",
             stringify!(ImNodesStyle),
@@ -469,7 +485,7 @@ fn bindgen_test_layout_ImNodesStyle() {
     );
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).MiniMapPadding) as usize - ptr as usize },
-        60usize,
+        64usize,
         concat!(
             "Offset of field: ",
             stringify!(ImNodesStyle),
@@ -479,7 +495,7 @@ fn bindgen_test_layout_ImNodesStyle() {
     );
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).MiniMapOffset) as usize - ptr as usize },
-        68usize,
+        72usize,
         concat!(
             "Offset of field: ",
             stringify!(ImNodesStyle),
@@ -489,7 +505,7 @@ fn bindgen_test_layout_ImNodesStyle() {
     );
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).Flags) as usize - ptr as usize },
-        76usize,
+        80usize,
         concat!(
             "Offset of field: ",
             stringify!(ImNodesStyle),
@@ -499,7 +515,7 @@ fn bindgen_test_layout_ImNodesStyle() {
     );
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).Colors) as usize - ptr as usize },
-        80usize,
+        84usize,
         concat!(
             "Offset of field: ",
             stringify!(ImNodesStyle),
@@ -622,21 +638,13 @@ extern "C" {
     pub fn imnodes_EndNodeTitleBar();
 }
 extern "C" {
-    pub fn imnodes_BeginInputAttribute(
-        id: ::std::os::raw::c_int,
-        shape: ImNodesPinShape,
-        category: ::std::os::raw::c_int,
-    );
+    pub fn imnodes_BeginInputAttribute(id: ::std::os::raw::c_int, shape: ImNodesPinShape);
 }
 extern "C" {
     pub fn imnodes_EndInputAttribute();
 }
 extern "C" {
-    pub fn imnodes_BeginOutputAttribute(
-        id: ::std::os::raw::c_int,
-        shape: ImNodesPinShape,
-        category: ::std::os::raw::c_int,
-    );
+    pub fn imnodes_BeginOutputAttribute(id: ::std::os::raw::c_int, shape: ImNodesPinShape);
 }
 extern "C" {
     pub fn imnodes_EndOutputAttribute();
@@ -698,6 +706,12 @@ extern "C" {
 }
 extern "C" {
     pub fn imnodes_SnapNodeToGrid(node_id: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn imnodes_SetPinCategory(pin_id: ::std::os::raw::c_int, category: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn imnodes_SetPinLinkStyle(pin_id: ::std::os::raw::c_int, style: ImNodesLinkStyle);
 }
 extern "C" {
     pub fn imnodes_IsEditorHovered() -> bool;

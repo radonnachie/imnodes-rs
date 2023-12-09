@@ -17,6 +17,7 @@ pub fn create_imnodes_style() -> ImNodesStyle {
         NodePadding: sys::ImVec2 { x: 8.0, y: 8.0 },
         NodeBorderThickness: 1.0,
 
+        LinkTerminationMargin: 15.0,
         LinkThickness: 3.0,
         LinkLineSegmentsPerLength: 0.1,
         LinkHoverDistance: 10.0,
@@ -143,6 +144,7 @@ pub enum StyleVar {
     NodeCornerRounding = sys::ImNodesStyleVar__ImNodesStyleVar_NodeCornerRounding,
     NodePaddingHorizontal = sys::ImNodesStyleVar__ImNodesStyleVar_NodePadding,
     NodeBorderThickness = sys::ImNodesStyleVar__ImNodesStyleVar_NodeBorderThickness,
+    LinkTerminationMargin = sys::ImNodesStyleVar__ImNodesStyleVar_LinkTerminationMargin,
     LinkThickness = sys::ImNodesStyleVar__ImNodesStyleVar_LinkThickness,
     LinkLineSegmentsPerLength = sys::ImNodesStyleVar__ImNodesStyleVar_LinkLineSegmentsPerLength,
     LinkHoverDistance = sys::ImNodesStyleVar__ImNodesStyleVar_LinkHoverDistance,
@@ -219,6 +221,14 @@ pub enum NodeSideShape {
     Straight = sys::ImNodesNodeSideShape__ImNodesNodeSideShape_Straight,
     Round = sys::ImNodesNodeSideShape__ImNodesNodeSideShape_Round,
     Sharp = sys::ImNodesNodeSideShape__ImNodesNodeSideShape_Sharp,
+}
+
+/// This enum controls the way links look.
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
+#[repr(i32)]
+pub enum LinkStyle {
+    Orthogonal = sys::ImNodesLinkStyle__ImNodesLinkStyle_Orthogonal,
+    Beziers = sys::ImNodesLinkStyle__ImNodesLinkStyle_Beziers,
 }
 
 /// This enum controls the way the attribute pins behave.

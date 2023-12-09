@@ -253,8 +253,8 @@ impl EditorScope {
     /// The attributes ids used here must match the ids used in Begin(Input|Output)Attribute function
     /// calls. The order of start_attr and end_attr doesn't make a difference for rendering the link.
     #[doc(alias = "Link")]
-    pub fn add_link(&self, id: LinkId, input: InputPinId, output: OutputPinId) {
-        unsafe { sys::imnodes_Link(id.into(), input.into(), output.into()) }
+    pub fn add_link(&self, id: LinkId, start: OutputPinId, end: InputPinId) {
+        unsafe { sys::imnodes_Link(id.into(), start.into(), end.into()) }
     }
 
     /// IsAnyAttributeActive
@@ -303,14 +303,10 @@ impl NodeScope {
     ///
     /// Create an input attribute block. The pin is rendered on left side.
     #[doc(alias = "BeginInputAttribute", alias = "EndInputAttribute")]
-    pub fn add_categorized_input<F: FnOnce()>(&mut self, id: InputPinId, shape: PinShape, category: i32, f: F) {
-        unsafe { sys::imnodes_BeginInputAttribute(id.into(), shape as i32, category) };
+    pub fn add_input<F: FnOnce()>(&mut self, id: InputPinId, shape: PinShape, f: F) {
+        unsafe { sys::imnodes_BeginInputAttribute(id.into(), shape as i32) };
         f();
         unsafe { sys::imnodes_EndInputAttribute() };
-    }
-    /// Convenience wrapper for [add_categorized_input], with category 0.
-    pub fn add_input<F: FnOnce()>(&mut self, id: InputPinId, shape: PinShape, f: F) {
-        self.add_categorized_input(id, shape, 0, f);
     }
 
     /// Attributes are ImGui UI elements embedded within the node. Attributes can have pin shapes
@@ -324,14 +320,10 @@ impl NodeScope {
     ///
     /// Create an output attribute block. The pin is rendered on the right side.
     #[doc(alias = "BeginOutputAttribute", alias = "EndOutputAttribute")]
-    pub fn add_categorized_output<F: FnOnce()>(&mut self, id: OutputPinId, shape: PinShape, category: i32, f: F) {
-        unsafe { sys::imnodes_BeginOutputAttribute(id.into(), shape as i32, category) };
+    pub fn add_output<F: FnOnce()>(&mut self, id: OutputPinId, shape: PinShape, f: F) {
+        unsafe { sys::imnodes_BeginOutputAttribute(id.into(), shape as i32) };
         f();
         unsafe { sys::imnodes_EndOutputAttribute() };
-    }
-    /// Convenience wrapper for [add_categorized_output], with category 0.
-    pub fn add_output<F: FnOnce()>(&mut self, id: OutputPinId, shape: PinShape, f: F) {
-        self.add_categorized_output(id, shape, 0, f);
     }
 
     /// Create a static attribute block. A static attribute has no pin, and therefore can't be linked to anything.

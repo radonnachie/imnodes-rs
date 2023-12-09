@@ -11,10 +11,10 @@ pub fn show(ui: &Ui, context: &mut imnodes::EditorContext) {
                 ui.text("simple node :)");
             });
             
-            node.add_categorized_input(id_gen.next_input_pin(), PinShape::QuadFilled, 1, ||{
+            node.add_input(id_gen.next_input_pin(), PinShape::QuadFilled, ||{
                 ui.text("parameter_sink")
             });
-            node.add_categorized_output(id_gen.next_output_pin(), PinShape::QuadFilled, 1, ||{
+            node.add_output(id_gen.next_output_pin(), PinShape::QuadFilled, ||{
                 ui.text("parameter_source")
             });
 
