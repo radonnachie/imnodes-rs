@@ -669,6 +669,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn imnodes_LinkWithWaypoints(
+        id: ::std::os::raw::c_int,
+        start_attribute_id: ::std::os::raw::c_int,
+        end_attribute_id: ::std::os::raw::c_int,
+        length: usize,
+        orthogonal_waypoints: *const f32,
+    );
+}
+extern "C" {
     pub fn imnodes_SetNodeDraggable(node_id: ::std::os::raw::c_int, draggable: bool);
 }
 extern "C" {
@@ -712,6 +721,13 @@ extern "C" {
 }
 extern "C" {
     pub fn imnodes_SetPinLinkStyle(pin_id: ::std::os::raw::c_int, style: ImNodesLinkStyle);
+}
+extern "C" {
+    pub fn imnodes_SetLinkPathOrthogonalWaypoints(
+        link_id: ::std::os::raw::c_int,
+        length: usize,
+        waypoints: *const f32,
+    );
 }
 extern "C" {
     pub fn imnodes_IsEditorHovered() -> bool;

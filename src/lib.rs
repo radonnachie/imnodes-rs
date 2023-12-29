@@ -344,6 +344,12 @@ impl LinkId {
     pub fn is_removed(&self, scope: &OuterScope) -> bool {
         Some(*self) == scope.get_dropped_link()
     }
+
+    /// sets the path of the link
+    #[doc(alias = "SetLinkPathOrthogonalWaypoints")]
+    pub fn set_path_by_orthogonal_waypoints(&self, waypoints: &Vec<f32>) {
+        unsafe { sys::imnodes_SetLinkPathOrthogonalWaypoints(self.id, waypoints.len(), waypoints.as_ptr()) };
+    }
 }
 
 impl Into<i32> for LinkId {
