@@ -49,7 +49,7 @@ fn main() -> io::Result<()> {
         .include("third-party/cimnodes/imnodes/")
         .warnings(false)
         .cpp(true)
-        .flag("-std=c++11")
+        .flag("--std=c++11")
         .compile("cimnodes");
 
     // not sure if this is a great idea but imgui does it as well so lets see if this breaks some day ;)

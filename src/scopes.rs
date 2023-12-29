@@ -328,6 +328,16 @@ impl EditorScope {
         unsafe { sys::imnodes_Link(id.into(), output_pin_id.into(), input_pin_id.into()) }
     }
 
+    /// Render a link between attributes, passing through waypoints.
+    /// The attributes ids used here must match the ids used in Begin(Input|Output)Attribute function
+    /// calls. The order of start_attr and end_attr doesn't make a difference for rendering the link.
+    /// The waypoints alternate between vertical and horizontal coordinates, starting and ending with
+    /// vertical. There must be an odd number of waypoints.
+    #[doc(alias = "LinkWithWaypoints")]
+    pub fn add_link_with_waypoints(&self, id: LinkId, start: OutputPinId, end: InputPinId, waypoints: &Vec<f32>) {
+        unsafe { sys::imnodes_LinkWithWaypoints(id.into(), start.into(), end.into(), waypoints.len(), waypoints.as_ptr()) }
+    }
+
     /// Checks if any attribute's UI is currently active (being interacted with).
     ///
     /// Returns the ID of the active attribute if one exists, otherwise `None`.

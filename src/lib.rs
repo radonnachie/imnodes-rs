@@ -468,6 +468,12 @@ impl LinkId {
         Some(*self) == scope.get_destroyed_link()
     }
 
+    /// sets the path of the link
+    #[doc(alias = "SetLinkPathOrthogonalWaypoints")]
+    pub fn set_path_by_orthogonal_waypoints(&self, waypoints: &Vec<f32>) {
+        unsafe { sys::imnodes_SetLinkPathOrthogonalWaypoints(self.id, waypoints.len(), waypoints.as_ptr()) };
+    }
+
     /// Selects this link.
     #[doc(alias = "SelectLink")]
     #[must_use]
