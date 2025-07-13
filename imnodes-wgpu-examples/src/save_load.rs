@@ -225,6 +225,18 @@ pub fn show(ui: &imgui::Ui, state: &mut SaveLoadState) {
         "Selected Links: {}",
         state.last_selected_links.len()
     ));
+    if state.last_selected_links.len() == 1 {
+        let link_id = state.last_selected_links[0];
+        let AppLink {
+            id,
+            start_pin,
+            end_pin,
+        } = state.links.iter().find(|l| l.id == link_id).unwrap();
+
+        ui.text(format!("  Link {id:?}:"));
+        ui.text(format!("    StartPin: {start_pin:?}:"));
+        ui.text(format!("    EndPin: {end_pin:?}:"));
+    }
     if !state.last_selected_links.is_empty() {
         ui.same_line();
         if ui.button("Clear Link Selection") {

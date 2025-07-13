@@ -334,8 +334,22 @@ impl EditorScope {
     /// The waypoints alternate between vertical and horizontal coordinates, starting and ending with
     /// vertical. There must be an odd number of waypoints.
     #[doc(alias = "LinkWithWaypoints")]
-    pub fn add_link_with_waypoints(&self, id: LinkId, start: OutputPinId, end: InputPinId, waypoints: &Vec<f32>) {
-        unsafe { sys::imnodes_LinkWithWaypoints(id.into(), start.into(), end.into(), waypoints.len(), waypoints.as_ptr()) }
+    pub fn add_link_with_waypoints(
+        &self,
+        id: LinkId,
+        start: OutputPinId,
+        end: InputPinId,
+        waypoints: &Vec<f32>,
+    ) {
+        unsafe {
+            sys::imnodes_LinkWithWaypoints(
+                id.into(),
+                start.into(),
+                end.into(),
+                waypoints.len(),
+                waypoints.as_ptr(),
+            )
+        }
     }
 
     /// Checks if any attribute's UI is currently active (being interacted with).
@@ -394,6 +408,7 @@ impl NodeScope {
     /// * `f`: A closure that defines the UI content associated with this pin.
     #[doc(alias = "BeginInputAttribute", alias = "EndInputAttribute")]
     pub fn add_input<F: FnOnce()>(&mut self, id: InputPinId, shape: PinShape, f: F) {
+        // Safety: Begins an input attribute scope. Must be paired with EndInputAttribute.
         unsafe { sys::imnodes_BeginInputAttribute(id.into(), shape as i32) };
         f();
         // Safety: Ends the input attribute scope.
@@ -410,6 +425,7 @@ impl NodeScope {
     /// * `f`: A closure that defines the UI content associated with this pin.
     #[doc(alias = "BeginOutputAttribute", alias = "EndOutputAttribute")]
     pub fn add_output<F: FnOnce()>(&mut self, id: OutputPinId, shape: PinShape, f: F) {
+        // Safety: Begins an output attribute scope. Must be paired with EndOutputAttribute.
         unsafe { sys::imnodes_BeginOutputAttribute(id.into(), shape as i32) };
         f();
         // Safety: Ends the output attribute scope.

@@ -379,6 +379,7 @@ impl From<InputPinId> for PinId {
         Self { id: val.id }
     }
 }
+
 /// Identifier for an output pin (rendered on the right side of a node).
 ///
 /// IDs must be unique within the editor context. Generated using [IdentifierGenerator::next_output_pin].
@@ -389,7 +390,6 @@ pub struct OutputPinId {
 
 /// Get the Pin ID
 pub trait IdentifiablePin {
-    
     /// Get the pin ID.
     fn get_pin_id(&self) -> i32;
 }
@@ -425,30 +425,28 @@ impl From<OutputPinId> for PinId {
 ///
 /// IDs must be unique within the editor context. Generated using [IdentifierGenerator::next_input_pin].
 pub trait ModifiablePin {
-
     /// Set the category of this pin.
     #[doc(alias = "SetPinCategory")]
     fn set_category(&self, category: i32) -> &Self;
 
-    /// Set the style of links attached to this pin.
-    #[doc(alias = "SetPinLinkStyle")]
-    fn set_link_style(&self, style: LinkStyle) -> &Self;
+    /// Set the category of this pin.
+    #[doc(alias = "GetPinCategory")]
+    fn get_category(&self) -> i32;
 }
 
-impl<T> ModifiablePin for T where T: IdentifiablePin {
-    
+impl<T> ModifiablePin for T
+where
+    T: IdentifiablePin,
+{
     fn set_category(&self, category: i32) -> &Self {
         unsafe { sys::imnodes_SetPinCategory(self.get_pin_id(), category) };
         self
     }
 
-    #[doc(alias = "SetPinLinkStyle")]
-    fn set_link_style(&self, style: LinkStyle) -> &Self {
-        unsafe { sys::imnodes_SetPinLinkStyle(self.get_pin_id(), style as i32) };
-        self
+    fn get_category(&self) -> i32 {
+        unsafe { sys::imnodes_GetPinCategory(self.get_pin_id()) }
     }
 }
-
 
 /// Identifier for a link between two pins.
 ///
@@ -471,7 +469,20 @@ impl LinkId {
     /// sets the path of the link
     #[doc(alias = "SetLinkPathOrthogonalWaypoints")]
     pub fn set_path_by_orthogonal_waypoints(&self, waypoints: &Vec<f32>) {
-        unsafe { sys::imnodes_SetLinkPathOrthogonalWaypoints(self.id, waypoints.len(), waypoints.as_ptr()) };
+        unsafe {
+            sys::imnodes_SetLinkPathOrthogonalWaypoints(
+                self.id,
+                waypoints.len(),
+                waypoints.as_ptr(),
+            )
+        };
+    }
+
+    /// Set the style of links attached to this pin.
+    #[doc(alias = "SetLinkStyle")]
+    pub fn set_link_style(&self, style: LinkStyle) -> &Self {
+        unsafe { sys::imnodes_SetLinkStyle(self.id, style as i32) };
+        self
     }
 
     /// Selects this link.

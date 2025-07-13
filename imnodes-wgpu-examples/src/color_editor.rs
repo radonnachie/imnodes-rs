@@ -1,5 +1,6 @@
 use imnodes::{
-    editor, AttributeFlags, AttributeId, Context, EditorContext, IdentifierGenerator, InputPinId, LinkId, NodeId, NodeSideShape, OutputPinId, PinShape, Style
+    AttributeFlags, AttributeId, Context, EditorContext, IdentifierGenerator, InputPinId, LinkId,
+    NodeId, NodeSideShape, OutputPinId, PinShape, Style, editor,
 };
 
 pub struct State {

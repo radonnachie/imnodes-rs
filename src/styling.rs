@@ -98,7 +98,7 @@ impl EditorContext {
 ///
 /// Used with [`ColorStyle::push_color`] and [`ColorToken::pop`].
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
-#[repr(u32)]
+#[repr(i32)]
 pub enum ColorStyle {
     /// Node background color.
     NodeBackground = sys::ImNodesCol__ImNodesCol_NodeBackground,
@@ -164,7 +164,7 @@ pub enum ColorStyle {
 
 impl ColorStyle {
     /// The total number of distinct color style settings.
-    pub const COUNT: u32 = sys::ImNodesCol__ImNodesCol_COUNT;
+    pub const COUNT: i32 = sys::ImNodesCol__ImNodesCol_COUNT;
 
     /// Pushes a color onto the style stack for this specific `ColorStyle` item.
     ///
@@ -213,7 +213,7 @@ impl Drop for ColorToken {
 /// Specifies the corner location of the minimap within the editor canvas.
 /// Used with [`crate::EditorScope::add_mini_map`].
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
-#[repr(u32)]
+#[repr(i32)]
 pub enum MiniMapLocation {
     /// Bottom-left corner.
     BottomLeft = sys::ImNodesMiniMapLocation__ImNodesMiniMapLocation_BottomLeft,
@@ -230,7 +230,7 @@ pub enum MiniMapLocation {
 /// Use [`StyleVar::push_f32`] or [`StyleVar::push_vec2`] to modify these temporarily.
 /// The default size of each pin shape is balanced to occupy approximately the same surface area on the screen.
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
-#[repr(u32)]
+#[repr(i32)]
 pub enum StyleVar {
     /// float: Spacing between grid lines.
     GridSpacing = sys::ImNodesStyleVar__ImNodesStyleVar_GridSpacing,
@@ -361,7 +361,7 @@ pub enum StyleFlags {
 
 /// Controls the visual shape of attribute pins.
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
-#[repr(u32)]
+#[repr(i32)]
 pub enum PinShape {
     /// A simple circle outline.
     Circle = sys::ImNodesPinShape__ImNodesPinShape_Circle,
@@ -379,7 +379,7 @@ pub enum PinShape {
 
 /// This enum specifies shapes for the sides of nodes.
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
-#[repr(u32)]
+#[repr(i32)]
 pub enum NodeSideShape {
     /// Straight node side
     Straight = sys::ImNodesNodeSideShape__ImNodesNodeSideShape_Straight,
@@ -391,7 +391,7 @@ pub enum NodeSideShape {
 
 /// Flags controlling the pathing of individual links.
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
-#[repr(u32)]
+#[repr(i32)]
 pub enum LinkStyle {
     /// Right-angled link path
     Orthogonal = sys::ImNodesLinkStyle__ImNodesLinkStyle_Orthogonal,
