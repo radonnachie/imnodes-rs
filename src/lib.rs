@@ -453,7 +453,7 @@ impl<T> ModifiablePin for T where T: IdentifiablePin {
 /// Identifier for a link between two pins.
 ///
 /// IDs must be unique within the editor context. Generated using [IdentifierGenerator::next_link].
-#[derive(Debug, Copy, Clone, Hash, Eq, PartialEq)]
+#[derive(Debug, Copy, Clone, Hash, Eq, PartialEq, PartialOrd, Ord)]
 pub struct LinkId {
     id: i32,
 }
